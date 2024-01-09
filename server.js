@@ -17,7 +17,7 @@ const filterByQuery = (query, animalsArray) => {
          filteredResults = filteredResults.filter((animal) => {
             animal.personalityTraits.indexOf(trait) !== -1;
          });
-      });
+      })
    }
    if (query.diet) {
       filteredResults = filteredResults.filter((animal) => animal.diet === query.diet);
