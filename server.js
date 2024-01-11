@@ -2,7 +2,7 @@ const express = require('express'); //* add package
 const { animals } = require('./data/animals.json');
 
 const app = express(); //* assign express to "app" to chain express server methods
-const port = 3001;
+const PORT = process.env.PORT || 3001;
 
 const filterByQuery = (query, animalsArray) => {
    let personalityTraitsArray = [];
@@ -17,7 +17,7 @@ const filterByQuery = (query, animalsArray) => {
          filteredResults = filteredResults.filter((animal) => {
             animal.personalityTraits.indexOf(trait) !== -1;
          });
-      })
+      });
    }
    if (query.diet) {
       filteredResults = filteredResults.filter((animal) => animal.diet === query.diet);
@@ -39,6 +39,6 @@ app.get('/api/animals', (req, res) => {
    res.json(results);
 });
 
-app.listen(port, () => {
-   console.log('***=>   API server now on port:', port);
+app.listen(PORT, () => {
+   console.log(`API server now on port ${PORT}!`);
 });
