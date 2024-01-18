@@ -120,7 +120,8 @@ app.get('/api/animals/:id', (req, res) => {
 //? POST
 //* uses req.body
 app.post('/api/animals', (req, res) => {
-   req.body.id = animals.length.toString(); //* creates next
+   req.body.id = animals.length.toString(); //* creates next id
+   //* validates for proper object formatting
    if (!validateAnimal(req.body)) {
       res.status(400).send('The animal is not properly formatted');
    } else {
