@@ -1,7 +1,9 @@
+const router = require('express').Router();  //* replaces app. with router.
+
+
 const { filterByQuery, findById, createNewAnimal, validateAnimal } = require('../../lib/animals');
 const { animals } = require('../../data/animals');
 
-const router = require('express').Router();  //* replaces app. with router.
 
 
 //? general API - GET

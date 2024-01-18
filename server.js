@@ -1,6 +1,10 @@
 const fs = require('fs');
 const path = require('path');
 
+//* The require() statements will read the index.js files in each of the directories indicated. This mechanism works the same way as directory navigation does in a website: If we navigate to a directory that doesn't have an index.html file, then the contents are displayed in a directory listing. But if there's an index.html file, then it is read and its HTML is displayed instead. 
+const apiRoutes = require('./routes/apiRoutes');
+const htmlRoutes = require('./routes/htmlRoutes');
+
 const express = require('express'); //* add package
 
 const { animals } = require('./data/animals.json');
@@ -26,38 +30,22 @@ const app = express(); //* assign express to "app" to chain express server metho
 app.use(express.urlencoded({ extended: true })); //* parse incoming string or array data
 app.use(express.json()); //* parse incoming JSON data
 
+
 //* Middleware to instruct the server to make certain files readily available and to
 //* not gate it behind a server endpoint.
 //* provide a file path to a location in our application (in this case, the public folder) and instruct the server to make these files static resources. This means that all of our front-end code can now be accessed without having a specific server endpoint created for it!
+app.use(express.static('public')); //! this goes BEFORE THE ROUTES BELOW
 
-app.use(express.static('public'));
+
+//* This is our way of telling the server that any time a client navigates to <ourhost>/api, the app will use the router we set up in apiRoutes. If / is the endpoint, then the router will serve back our HTML routes.
+app.use('/api', apiRoutes);
+app.use('/', htmlRoutes);
 
 //! *************** end of middleware  *************
 
 const PORT = process.env.PORT || 3001;
 
 
-//? GET - Root server route - renders index.html
-app.get('/', (req, res) => {
-   res.sendFile(path.join(__dirname, './public/index.html'));
-});
-
-//? GET - renders animals.html
-app.get('/animals', (req, res) => {
-   res.sendFile(path.join(__dirname, './public/animals.html'));
-});
-
-//? GET - renders zookeepers.html
-app.get('/zookeepers', (req, res) => {
-   res.sendFile(path.join(__dirname, './public/zookeepers.html'));
-});
-
-//? Wildcard route
-//! MUST be always last route
-//*  any route that wasn't previously defined will fall under this request and will receive the homepage as the response. 
-app.get('*', (req, res) => {
-   res.sendFile(path.join(__dirname, './public/index.html'));
-});
 
 //! ALWAYS the last express app method
 app.listen(PORT, () => {
