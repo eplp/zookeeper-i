@@ -22,12 +22,14 @@ const app = express(); //* assign express to "app" to chain express server metho
 //* so it needs to look as deep into the POST data as possible to parse all of the data correctly.
 //* The express.json() method we use takes incoming POST data in the form of JSON and parses it into the req.body JavaScript object.
 //! Both of the following middleware functions need to be set up every time you create a server that's looking to accept POST data.
+
 app.use(express.urlencoded({ extended: true })); //* parse incoming string or array data
 app.use(express.json()); //* parse incoming JSON data
 
 //* Middleware to instruct the server to make certain files readily available and to
 //* not gate it behind a server endpoint.
 //* provide a file path to a location in our application (in this case, the public folder) and instruct the server to make these files static resources. This means that all of our front-end code can now be accessed without having a specific server endpoint created for it!
+
 app.use(express.static('public'));
 
 //! *************** end of middleware  *************
